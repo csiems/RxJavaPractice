@@ -13,7 +13,16 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        observableMessages();
+    }
 
+    public void observableMessages() {
+        verboseMessage();
+        compactMessage();
+        lambdaMessage();
+    }
+
+    public void verboseMessage() {
         Observable<String> helloObservable = Observable.create(
             new Observable.OnSubscribe<String>() {
                 @Override
@@ -25,35 +34,34 @@ public class MainActivity extends AppCompatActivity {
         );
 
         Subscriber<String> helloSubscriber = new Subscriber<String>() {
+            @Override
+            public void onNext(String s) { System.out.println(s); }
 
             @Override
-            public void onNext(String s) {
-                System.out.println(s);
-            }
+            public void onCompleted() {}
 
             @Override
-            public void onCompleted() {
-
-            }
-
-            @Override
-            public void onError(Throwable e) {
-
-            }
+            public void onError(Throwable e) {}
         };
 
         helloObservable.subscribe(helloSubscriber);
+    }
 
 
+    private void compactMessage() {
         Observable.just("Nice to meet you.")
-            .subscribe(new Action1<String>() {
-                @Override
-                public void call(String s) {
-                    System.out.println(s);
-                }
-            });
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String s) {
+                        System.out.println(s);
+                    }
+                });
+    }
 
+
+    private void lambdaMessage() {
         Observable.just("And how about this lambda?")
                 .subscribe(s -> System.out.println(s));
     }
+
 }
