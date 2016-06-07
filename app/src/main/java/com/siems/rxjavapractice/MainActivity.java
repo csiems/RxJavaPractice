@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import rx.Observable;
 import rx.Subscriber;
+import rx.functions.Action1;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +43,16 @@ public class MainActivity extends AppCompatActivity {
         };
 
         helloObservable.subscribe(helloSubscriber);
+
+
+        Observable.just("Nice to meet you.")
+            .subscribe(new Action1<String>() {
+                @Override
+                public void call(String s) {
+                    System.out.println(s);
+                }
+            });
+
 
     }
 }
