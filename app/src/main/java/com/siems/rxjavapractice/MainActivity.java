@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             });
 
-
+        Observable.just("And how about this lambda?")
+                .subscribe(s -> System.out.println(s));
     }
 }
